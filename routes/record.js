@@ -1,3 +1,29 @@
+import express from "express"
+import register from "../controllers/authController.js"
+import createRun from "../controllers/runController.js"
+
+const router = express.Router()
+
+// router.route("/test").get((req, res, next) => {
+//   res.send("Hello World!")
+// })
+
+router.route("/register").post(register)
+router.route("/addrun").get(createRun)
+
+router.get("/test", (req, res, next) => {
+  console.log("testfdafdst")
+  res.send("Hello World!")
+})
+router.post("/post", (req, res, next) => {
+  res.send("Hello World!")
+})
+router.delete("/delete", (req, res, next) => {
+  res.send("Hello World!")
+})
+
+export default router
+
 // const express = require("express")
 
 // // recordRoutes is an instance of the express router.

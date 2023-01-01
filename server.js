@@ -3,6 +3,7 @@ const app = express()
 import cors from "cors"
 
 import dotenv from "dotenv"
+// dotenv.config()
 dotenv.config({ path: "./config.env" })
 // require("dotenv").config({ path: "./config.env" })
 const port = process.env.PORT || 5002
@@ -10,18 +11,19 @@ const port = process.env.PORT || 5002
 app.use(cors())
 app.use(express.json())
 
-// app.use(require("./routes/record"))
-
 //db and authentication
 import connectDB from "./db/conn.js"
 
-// // get driver connection
-// const dbo = require("./db/conn")
+//routes
+import router from "./routes/record.js"
+import runsRouter from "./routes/runsRouter.js"
 
-console.log("hello")
-console.log("hello")
-console.log("hello")
-console.log("hello")
+app.use("/api/v1/auth", router)
+app.use("/api/v1/runs", runsRouter)
+
+// app.get('/addrun', (req, res)=>{
+
+// })
 
 app.get("/", (req, res) => {
   //   throw new Error("dfadfa")
@@ -32,7 +34,7 @@ app.get("/", (req, res) => {
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL)
-    //server will spin up only if we are successfull
+    //server will spin up only if we are successful
     app.listen(port, () => {
       console.log(`listening on port ${port}`)
     })
