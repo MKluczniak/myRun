@@ -51,5 +51,3 @@ export default mongoose.model("User", UserSchema) //User 'will create users coll
 //create schema
 
 // select:false means password will not be shown when we get all users, but it can be overwritten by using select('+password') in the query
-
-//test
