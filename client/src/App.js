@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 // import { Register, Landing, Error, ProtectedRoute } from "./pages"
 import { Error, CreateUser, Dashboard, Landing, Register, Test2 } from "./pages"
 
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 // const Button = styled.button`
 //   background-color: #f50057;
 //   color: white;
@@ -21,6 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      <ToastContainer position="top-center" />
     </BrowserRouter>
   )
 }

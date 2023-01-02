@@ -3,6 +3,8 @@ import { FormRow, Logo } from "../components"
 import Wrapper from "../assets/wrappers/RegisterPage"
 // redux toolkit and useNavigate later
 
+import { toast } from "react-toastify"
+
 const initialState = {
   name: "",
   email: "",
@@ -29,7 +31,7 @@ function Register() {
     const { name, email, password, isMember } = values
     console.log(`name: ${name}, email: ${email}, password: ${password}`)
     if (!email || !password || (!isMember && !name)) {
-      console.log("please fill in all fields")
+      toast.error("Please fill in all fields") // also toast.error, toast.success
       return
     }
   }
