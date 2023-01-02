@@ -55,10 +55,10 @@ const Landing = () => {
 
             <p>
               Aplikacja do rejestracji wydarzeń biegowych to rodzaj aplikacji
-              mobilnej, która umożliwia użytkownikom zapisywanie i śledzenie
-              wydarzen biegowych m.in. zawodów biegowych, na ktore już się
-              zapisali, lub planują zapisac sie w przyszłości. Pozwala także na
-              dzielenie się informacjami o planach biegowych z innymi
+              mobilnej, która umożliwia użytkownikom zapisywania, porządkowania
+              i śledzenie wydarzen biegowych m.in. zawodów biegowych, na ktore
+              już się zapisali, lub planują zapisac sie w przyszłości. Pozwala
+              także na dzielenie się informacjami o planach biegowych z innymi
               użytkownikami.
             </p>
             {/* <h1>{user ? user.data.user.email : "loading..."}</h1> */}

@@ -1,5 +1,11 @@
+import Eye from "../components/Eye"
+
 const Dashboard = () => {
-  return <div></div>
+  return (
+    <div>
+      <Eye />
+    </div>
+  )
 }
 
 export default Dashboard
