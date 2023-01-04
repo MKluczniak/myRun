@@ -22,9 +22,20 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (user, thunkAPI) => {
-    console.log(`loginUser thunk ${user}`)
+    try {
+      const resp = await customFetch.post("/auth/login", user)
+      return resp.data //that's the user  object
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg)
+    }
   }
 )
+// export const loginUser = createAsyncThunk(
+//   "user/loginUser",
+//   async (user, thunkAPI) => {
+//     console.log(`loginUser thunk ${user.token}`)
+//   }
+// )
 
 const userSlice = createSlice({
   name: "user",
@@ -39,9 +50,26 @@ const userSlice = createSlice({
       const { user } = payload
       state.isLoading = false
       state.user = user
+      console.log(`userSlice ${user.token}`)
       toast.success(`Welcome ${user.name}`)
     },
     [registerUser.rejected]: (state, { payload }) => {
+      state.isLoading = false
+      console.log(payload)
+      toast.error(payload)
+    },
+    [loginUser.pending]: (state, action) => {
+      state.isLoading = true
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      //in payload we have the user object 'whatever we return from the registeruser async function'
+      const { user } = payload
+      state.isLoading = false
+      state.user = user
+      console.log(`userSlice ${user.token}`)
+      toast.success(`Welcome Back ${user.name}`)
+    },
+    [loginUser.rejected]: (state, { payload }) => {
       state.isLoading = false
       console.log(payload)
       toast.error(payload)

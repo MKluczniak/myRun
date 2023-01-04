@@ -3,8 +3,8 @@ const app = express()
 import cors from "cors"
 
 import dotenv from "dotenv"
-// dotenv.config()
-dotenv.config({ path: "./config.env" })
+dotenv.config()
+// dotenv.config({ path: "./config.env" })
 // require("dotenv").config({ path: "./config.env" })
 const port = process.env.PORT || 5002
 
@@ -15,7 +15,7 @@ app.use(express.json())
 import connectDB from "./db/conn.js"
 
 //routes
-import router from "./routes/record.js"
+import router from "./routes/authRouter.js"
 import runsRouter from "./routes/runsRouter.js"
 
 app.use("/api/v1/auth", router)

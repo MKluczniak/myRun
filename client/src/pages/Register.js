@@ -29,7 +29,7 @@ function Register() {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log(`name: ${name}, value: ${value}`)
+    // console.log(`name: ${name}, value: ${value}`)
     setValues({ ...values, [name]: value })
   }
 
@@ -81,11 +81,11 @@ function Register() {
           labelText="password"
         />
 
-        <button type="submit" className="btn btn-block">
-          submit
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
+          {values.isLoading ? "loading..." : "submit"}
         </button>
         <p>
-          {values.isMember ? "Not a member yet" : "Already a member?"}
+          {values.isMember ? "Not a member yet?" : "Already a member?"}
           <button type="button" onClick={toggleMember} className="member-btn">
             {values.isMember ? "register" : "login"}
           </button>
