@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import { loginUser, registerUser } from "../features/user/userSlice"
 
+import { useNavigate } from "react-router-dom"
+
 const initialState = {
   name: "",
   email: "",
@@ -24,6 +26,8 @@ function Register() {
   const { user, isLoading } = useSelector((store) => store.user)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   // redux toolkit and useNavigate later
 
   const handleChange = (e) => {
@@ -51,6 +55,14 @@ function Register() {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (user) {
+        navigate("/")
+      }
+    }, 2000)
+  }, [user, navigate])
 
   return (
     <Wrapper className="full-page">

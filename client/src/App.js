@@ -1,13 +1,18 @@
-import logo from "./logo.svg"
-import "./App.css"
+// import logo from "./logo.svg"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-// import { Register, Landing, Error, ProtectedRoute } from "./pages"
-import { Error, CreateUser, Dashboard, Landing, Register, Test2 } from "./pages"
+import { Register, Landing, Error, ProtectedRoute } from "./pages"
 
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import {
+  AddRun,
+  AllRuns,
+  Profile,
+  SharedLayout,
+  Stats,
+} from "./pages/dashboard/index.js"
 
 // const Button = styled.button`
 //   background-color: #f50057;
@@ -19,7 +24,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Stats />} />
+          <Route path="/addRun" element={<AddRun />} />
+          <Route path="/all-runs" element={<AllRuns />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
         <Route path="/landing" element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />

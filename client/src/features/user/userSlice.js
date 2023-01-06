@@ -2,10 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit" // for the asyn
 
 import { toast } from "react-toastify"
 import customFetch from "../../utils/axios"
+import {
+  addUserToLocalStorage,
+  getUserFromLocalStorage,
+} from "../../utils/localStorage"
 
 const initialState = {
   isLoading: false, //will be for controlling the submit button so the user cant click it multiple times
-  user: null,
+  isSidebarOpen: false,
+  // isLogoutButtonOpen: false,
+  user: getUserFromLocalStorage(), //we will get back the user when the app loads
 }
 
 export const registerUser = createAsyncThunk(
@@ -40,6 +46,18 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen
+    },
+    // toggleLogoutButton: (state) => {
+    //   state.isLogoutButtonOpen = !state.isLogoutButtonOpen
+    // },
+    logoutUser: (state) => {
+      state.user = null
+      localStorage.removeItem("user")
+    },
+  },
 
   extraReducers: {
     [registerUser.pending]: (state, action) => {
@@ -51,6 +69,7 @@ const userSlice = createSlice({
       state.isLoading = false
       state.user = user
       console.log(`userSlice ${user.token}`)
+      addUserToLocalStorage(user)
       toast.success(`Welcome ${user.name}`)
     },
     [registerUser.rejected]: (state, { payload }) => {
@@ -66,6 +85,7 @@ const userSlice = createSlice({
       const { user } = payload
       state.isLoading = false
       state.user = user
+      addUserToLocalStorage(user)
       console.log(`userSlice ${user.token}`)
       toast.success(`Welcome Back ${user.name}`)
     },
@@ -76,4 +96,6 @@ const userSlice = createSlice({
     },
   },
 })
+
+export const { logoutUser, toggleSidebar } = userSlice.actions //PP
 export default userSlice.reducer
