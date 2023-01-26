@@ -1,11 +1,13 @@
-import React from "react"
+import SearchContainer from "../../components/SearchContainer"
+import RunsContainer from "../../components/RunsContainer"
 
-const AllJobs = () => {
+const AllRuns = () => {
   return (
-    <div>
-      <h1>alljobs</h1>
-    </div>
+    <>
+      <SearchContainer />
+      <RunsContainer />
+    </>
   )
 }
 
-export default AllJobs
+export default AllRuns

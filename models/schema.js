@@ -21,7 +21,7 @@ const UserSchema = new Schema({
       validator: validator.isEmail,
       message: "email is not valid, please check again",
     },
-    unique: false,
+    unique: true,
   },
   password: {
     type: String,
@@ -44,14 +44,12 @@ const UserSchema = new Schema({
   },
 })
 
-// export schema
-
 //in mongoose docs, here we setting up a middleware "so before we save the doc we want to run some functionality"
 UserSchema.pre("save", async function () {
   console.log(this.modifiedPaths()) //returns an array of modified values
   // console.log(this.isModified('name'));
   if (!this.isModified("password")) return
-  // iit is a hook that is called before we save the doc, but not every method (like find one) is going to trigger it
+
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
 })
@@ -63,14 +61,14 @@ UserSchema.methods.createJWT = function () {
   })
 }
 
-// creating the compare method
 UserSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password)
   return isMatch
 }
 
-export default mongoose.model("User", UserSchema) //User 'will create users collection in mangodb'
+// export schema
+export default mongoose.model("User", UserSchema) //User will automatically create users collection in mongodb
 
-//create schema
+//we are creating !data model for our user, and we are exporting it so we can use it in other files
 
 // select:false means password will not be shown when we get all users, but it can be overwritten by using select('+password') in the query

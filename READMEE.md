@@ -1171,7 +1171,7 @@ export const SmallSidebar = () => {
             <FaTimes />
           </button>
           <header>
-            <Logo />
+
           </header>
           <div className='nav-links'>nav links</div>
         </div>

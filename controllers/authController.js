@@ -8,7 +8,7 @@ import BadRequestError from "../errors/bad-request.js"
 const register = async (req, res) => {
   const { name, email, password } = req.body
   if (!name || !email || !password) {
-    throw new BadRequestError("Please provide all values")
+    throw new BadRequestError("Please provide all values") //Error or just send ??P
   }
   const userAlreadyExists = await User.findOne({ email })
   if (userAlreadyExists) {
@@ -27,7 +27,6 @@ const register = async (req, res) => {
       name: user.name,
       token: token,
     },
-    // token,
     location: user.location,
   })
 }
@@ -45,10 +44,6 @@ const login = async (req, res) => {
     // throw new BadRequestError("Invalid credentials") // should i use it or not??P
   }
   console.log(user)
-  // const isMatch = await user.matchPassword(password)
-  // if (!isMatch) {
-  //   throw new BadRequestError("Invalid credentials")
-  // }
 
   const isPasswordCorrect = await user.comparePassword(password) //user is an instance method so the comparePassword goes to the object and aks get me the password property
   if (!isPasswordCorrect) {
@@ -59,19 +54,36 @@ const login = async (req, res) => {
 
   user.password = undefined // therefore our password wont be included in the response (we could also hardcoded everything in resposne like in the register f.)
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
-
-  // res.status(StatusCodes.OK).json({
-  //   user: {
-  //     email: user.email,
-  //     lastName: user.lastName,
-  //     location: user.location,
-  //     name: user.name,
-  //     token: token,
-  //   },
-  //   // token,
-  //   location: user.location,
-  // })
+  res.status(StatusCodes.OK).json({
+    user: {
+      email: user.email,
+      lastName: user.lastName,
+      location: user.location,
+      name: user.name,
+      token: token,
+    },
+  })
 }
 
-export { register, login }
+const updateUser = async (req, res) => {
+  const { name, lastName, email, location } = req.body
+  if (!name || !email || !lastName || !location) {
+    throw new BadRequestError("Please provide all values")
+  }
+
+  console.log(req.body)
+  const user = await User.findOne({ email: req.body.email })
+
+  user.email = email
+  user.name = name
+  user.lastName = lastName
+  user.location = location
+
+  await user.save()
+
+  const token = user.createJWT()
+
+  res.status(StatusCodes.OK).json({ user, token })
+}
+
+export { register, login, updateUser }

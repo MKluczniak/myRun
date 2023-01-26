@@ -42,7 +42,7 @@ function Register() {
     const { name, email, password, isMember } = values
     console.log(`name: ${name}, email: ${email}, password: ${password}`)
     if (!email || !password || (!isMember && !name)) {
-      toast.error("Please fill in all fields") // also toast.error, toast.success
+      toast.error("Please fill in all fields")
       return
     }
     if (isMember) {
@@ -99,7 +99,7 @@ function Register() {
         <p>
           {values.isMember ? "Not a member yet?" : "Already a member?"}
           <button type="button" onClick={toggleMember} className="member-btn">
-            {values.isMember ? "register" : "login"}
+            {values.isMember ? "Register" : "login"}
           </button>
         </p>
       </form>

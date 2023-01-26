@@ -1,12 +1,13 @@
-import Test from "../models/runSchema.js"
+import Run from "../models/runSchema.js"
 
 import { StatusCodes } from "http-status-codes"
 import BadRequestError from "../errors/bad-request.js"
 
 const createRun = async (req, res) => {
-  const { name, location } = req.body
+  const { runName, runLocation, runDistance, status, whoIsAlsoRunning } =
+    req.body
   console.log(req.body)
-  if (!name || !location) {
+  if (!runName || !runLocation || !runDistance || !status) {
     throw new BadRequestError("Please provide all values")
   }
 
@@ -15,15 +16,24 @@ const createRun = async (req, res) => {
   //     throw new BadRequestError("Email already in use")
   //   }
 
-  const test = await Test.create({ name, location })
+  const run = await Run.create({
+    runName,
+    runDistance,
+    runLocation,
+    status,
+    whoIsAlsoRunning,
+    userId: req.userId,
+  })
 
   console.log("test")
   res.status(StatusCodes.CREATED).json({
-    test: {
-      name: test.name,
-      location: test.location,
+    run: {
+      runName: run.name,
+      runLocation: run.location,
+      runDistance: run.distance,
+      status: run.status,
+      whoIsAlsoRunning: run.whoIsAlsoRunning,
     },
-    // token,
   })
 }
 

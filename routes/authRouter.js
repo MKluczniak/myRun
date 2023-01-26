@@ -1,5 +1,5 @@
 import express from "express"
-import { register, login } from "../controllers/authController.js"
+import { register, login, updateUser } from "../controllers/authController.js"
 import createRun from "../controllers/runController.js"
 
 const router = express.Router()
@@ -11,6 +11,8 @@ const router = express.Router()
 router.route("/register").post(register)
 router.route("/addrun").get(createRun)
 router.route("/login").post(login)
+
+router.route("/updateUser").patch(updateUser)
 
 router.get("/test", (req, res, next) => {
   console.log("testfdafdst")

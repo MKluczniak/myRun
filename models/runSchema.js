@@ -7,19 +7,38 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema
 
 const RunSchema = new Schema({
-  name: {
+  runName: {
     type: String,
-    required: [true, "nama is required"],
-    minlength: [2, "nama is too short"],
-    maxlength: [50, "nama is too long"],
+    required: [true, "name is required"],
+    // minlength: [2, "name is too short"],
+    // maxlength: [50, "name is too long"],
     trim: true,
   },
-
-  location: {
+  runLocation: {
     type: String,
     trim: true,
     maxlength: 20,
     default: "my city",
+  },
+  runDistance: {
+    type: Number,
+    trim: true,
+  },
+  status: {
+    type: String,
+    trim: true,
+    maxlength: 50,
+    default: "nieopłacony",
+  },
+  whoIsAlsoRunning: {
+    type: String,
+    maxlength: 150,
+    trim: true,
+  },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: [true, "Please provide user"],
   },
 })
 
